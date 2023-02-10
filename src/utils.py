@@ -1,11 +1,9 @@
 import re
+import torch
 from glob import glob
 
 from PIL import Image
 
-import torch
-from torch import nn
-from torchvision import models
 
 
 def load_image(filename) :

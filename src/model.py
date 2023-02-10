@@ -104,7 +104,7 @@ def train_model(model, optimizer, criterion, n_epochs, train_dataloader, test_da
             
             if network_learned:
                 valid_loss_min = batch_loss
-                torch.save(model.state_dict(), 'resnet18_pat.pt')
+                torch.save(model.state_dict(), 'model/resnet18_pat.pt')
                 print('Improvement-Detected, save-model')
         model.train()
 

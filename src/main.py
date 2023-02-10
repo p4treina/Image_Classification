@@ -1,4 +1,6 @@
 import torch
+import torch.optim as optim
+from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import transforms
 
@@ -6,10 +8,11 @@ import matplotlib.pyplot as plt
 
 from utils import load_data_from_folder
 from data import ImageDataset, transformations
+from model import load_model, train_model, get_trainable
 
 
 # Get data
-folder_path = ''
+folder_path = './data/images/*.jpg'
 data = load_data_from_folder(folder_path)
 
 # Set up dataset
@@ -51,16 +54,22 @@ test_dataloader = DataLoader(
     test_data, batch_size=64, shuffle = True, num_workers = 4
 )
 
-
-
 # Load model
+base_model = 'resnet18'
+pretrained = True
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+model = load_model(base_model, device, pretrained, out_features = 37, layers_to_freeze = None, freeze_all = False)
 
 # Set up loss function and optimizer
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(get_trainable(model.parameters()), lr=0.0001)
 
 # Train Loop
+n_epochs = 5
+trained_model = train_model(model, optimizer, criterion, n_epochs, train_dataloader, test_dataloader, device)
 
+# Load model from local
 
-# Load trained model
 
 # Predict
 
