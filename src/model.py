@@ -18,7 +18,7 @@ def get_trainable(model_params):
     return (p for p in model_params if p.requires_grad)
 
 def load_model(base_model, device, pretrained, out_features, layers_to_freeze, freeze_all = False):
-
+  
   if base_model == 'resnet18':
     net = models.resnet18(pretrained=pretrained)
   elif base_model == 'resnet34':
